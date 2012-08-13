@@ -97,6 +97,10 @@ http://kangoextensions.com/
 		    return arrItems.join(';');
 		}
 		
+		function formatPrice(str) {
+			return str.replace(/\$/g, '').replace(/\./g, ',');
+		}
+		
 		function parseBasket() {
 			var slotLenght = -1;
 
@@ -112,7 +116,7 @@ http://kangoextensions.com/
 					unitPrice = $(this).find('.cart_unit > span').text(),
 					unitQuant = $(this).find('.cart_quantity > p').text(),
 					totalPrice = $(this).find('.cart_total > span').text(),
-					arrSlot = [url, descr, quant.trim(), unitPrice, unitQuant, totalPrice];
+					arrSlot = [url, descr, quant.trim(), formatPrice(unitPrice), unitQuant, formatPrice(totalPrice)];
 
 				slotLength = arrSlot.length;
 				writeln(joinItems(arrSlot));
@@ -120,10 +124,10 @@ http://kangoextensions.com/
 
 			var	sumPrice = summary.find('.cart_total_product .price').text(),
 				sumShip = summary.find('.cart_total_delivery .price').text(),
-				sumTotal = summary.find('.cart_total_price .price').text();
-				totalQuant = $('#shopping_cart .ajax_cart_quantity'),
+				sumTotal = summary.find('.cart_total_price .price').text(),
+				totalQuant = $('#shopping_cart .ajax_cart_quantity').text(),
 				ident = createIdent(slotLength),
-				arrLn1 = [sumTotal, totalQuant, sumPrice],
+				arrLn1 = [formatPrice(sumTotal), totalQuant, formatPrice(sumPrice)],
 				totalLn1 =  ident + joinItems(arrLn1),
 				arrLn2 = [],
 				totalLn2 = ident + joinItems(arrLn2),

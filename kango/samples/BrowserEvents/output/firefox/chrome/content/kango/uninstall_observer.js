@@ -1,0 +1,6 @@
+﻿/*
+Built using BrowserEvents_kango - Cross-browser extension framework.
+http://kangoextensions.com/
+*/
+BrowserEvents_kango.UninstallObserver={init:function(){this.register();},observe:function(subject,topic,data){var objExtensionItem=subject.QueryInterface(Components.interfaces.nsIUpdateItem);if(data=='item-uninstalled'){if(objExtensionItem.id==BrowserEvents_kango.getExtensionInfo().id){BrowserEvents_kango.fireEvent(BrowserEvents_kango.event.Uninstall);}}},register:function(){var observerService=Components.classes['@mozilla.org/observer-service;1'].getService(Components.interfaces.nsIObserverService);observerService.addObserver(this,'em-action-requested',false);},unregister:function(){var observerService=Components.classes['@mozilla.org/observer-service;1'].getService(Components.interfaces.nsIObserverService);observerService.removeObserver(this,'em-action-requested');}};BrowserEvents_kango.addEventListener(BrowserEvents_kango.event.Ready,function(){if(typeof AddonManager!='undefined'){AddonManager.addAddonListener({onUninstalling:function(addon,needsRestart){if(addon.id==BrowserEvents_kango.getExtensionInfo().id){BrowserEvents_kango.fireEvent(BrowserEvents_kango.event.Uninstall);}}});}
+else{BrowserEvents_kango.UninstallObserver.init();}});

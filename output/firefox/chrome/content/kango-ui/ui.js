@@ -8,7 +8,7 @@ http://kangoextensions.com/
 */
 TeeBasket_kango.ui={};TeeBasket_kango.oop.mixin(TeeBasket_kango.ui,TeeBasket_kango.EventTarget.prototype);TeeBasket_kango.oop.mixin(TeeBasket_kango.ui,new TeeBasket_kango.EventTarget());TeeBasket_kango.ui._init=function(){throw new TeeBasket_kango.NotImplementedException();};TeeBasket_kango.ui.event={Ready:'Ready'};TeeBasket_kango.ui.ButtonBase=function(details){this._details=details;TeeBasket_kango.oop.mixin(this,TeeBasket_kango.EventTarget.prototype);TeeBasket_kango.oop.mixin(this,new TeeBasket_kango.EventTarget());};TeeBasket_kango.ui.ButtonBase.prototype={_details:null,event:{Command:'command',PopupDocumentComplete:'PopupDocumentComplete'},setTooltipText:function(text){throw new TeeBasket_kango.NotImplementedException();},setCaption:function(text){throw new TeeBasket_kango.NotImplementedException();},setIcon:function(path){throw new TeeBasket_kango.NotImplementedException();},setBadgeValue:function(val){throw new TeeBasket_kango.NotImplementedException();},setBadgeBackgroundColor:function(color){throw new TeeBasket_kango.NotImplementedException();},setPopup:function(details){throw new TeeBasket_kango.NotImplementedException();},setContextMenu:function(){throw new TeeBasket_kango.NotImplementedException();}};TeeBasket_kango.addEventListener(TeeBasket_kango.event.Ready,function(){TeeBasket_kango.ui._init();});TeeBasket_kango.ui.IOptionsPage=function(){};TeeBasket_kango.ui.IOptionsPage.prototype={open:function(){throw new TeeBasket_kango.NotImplementedException();}};
 
-// Merged from /home/aleka/opt/TeeBasket_kango/src/js/firefox/kango-ui/ui.part.js
+// Merged from /home/ac/IdeaProjects/teabasket/TeeBasket_kango/src/js/firefox/kango-ui/ui.part.js
 
 /*
 Built using TeeBasket_kango - Cross-browser extension framework.

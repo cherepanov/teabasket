@@ -19,7 +19,7 @@ return obj;};win.KangoAPI={_readyListeners:[],_readyFired:false,createKangoProxy
 else{callback();}},closeWindow:function(){},fireReady:function(){for(var i=0;i<this._readyListeners.length;i++){this._readyListeners[i]();}
 this._readyFired=true;}};})(window);
 
-// Merged from /home/aleka/opt/kango/src/js/opera/kango-ui/kango_api.part.js
+// Merged from /home/ac/IdeaProjects/teabasket/kango/src/js/opera/kango-ui/kango_api.part.js
 
 /*
 Built using Kango - Cross-browser extension framework.

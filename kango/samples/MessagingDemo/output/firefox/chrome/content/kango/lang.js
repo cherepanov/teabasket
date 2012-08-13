@@ -1,0 +1,7 @@
+﻿/*
+Built using MessagingDemo_kango - Cross-browser extension framework.
+http://kangoextensions.com/
+*/
+MessagingDemo_kango.HTMLSandbox=function(){this._browser=document.getElementById(this._browserId);};MessagingDemo_kango.HTMLSandbox.prototype={_browserId:"MessagingDemo_kangoBackgroundScriptHost",_browser:null,create:function(src,callback){this._browser.addEventListener('DOMContentLoaded',function(event){var win=event.target.defaultView.wrappedJSObject;callback(win);},true);this._browser.setAttribute('src',MessagingDemo_kango.io.getExtensionFileUrl(src));}};MessagingDemo_kango.Lang=function(){};MessagingDemo_kango.Lang.prototype=MessagingDemo_kango.oop.extend(MessagingDemo_kango.LangBase,{createHTMLSandbox:function(src,callback){return(new MessagingDemo_kango.HTMLSandbox()).create(src,callback);},evalInSandbox:function(win,api,text){if(typeof api['kango']!='undefined'&&win!=null&&win!=window){api['kango']=MessagingDemo_kango.browser.getTabProxyForWindow(win);}
+var sandbox=Components.utils.Sandbox(win);for(var key in api){if(api.hasOwnProperty(key)){sandbox[key]=api[key];}}
+sandbox.__proto__=new XPCNativeWrapper(win);Components.utils.evalInSandbox('(function(){'+text+'\n})();',sandbox);}});MessagingDemo_kango.lang=new MessagingDemo_kango.Lang();

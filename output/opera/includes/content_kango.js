@@ -17,7 +17,7 @@ var parser=new DOMParserClass();data.response=parser.parseFromString(data.respon
 data.contentType=contentType;callback(data);});}};kango._init=function(runAt){if(typeof kango.dispatchMessage=='undefined'){this._initMessaging();}
 var usclient=new kango.UserscriptEngineClient();usclient.run(window,runAt);};
 
-// Merged from ./output/opera/includes/content_kango.part.js
+// Merged from /home/ac/IdeaProjects/teabasket/kango/src/js/opera/includes/content_kango.part.js
 
 /*
 Built using Kango - Cross-browser extension framework.

@@ -18,7 +18,7 @@ else{this.headers.include.concat(this.headers.match);}}},_parseHeadersToHashTabl
 var result=line.match(/\/\/ @(\S+)\s*(.*)/);if(result!=null){var name=result[1];var value=result[2].replace(/\n|\r/g,'');switch(name){case'include':case'exclude':case'match':headers[name]=headers[name]||[];headers[name].push(value);break;default:headers[name]=value;}}}
 return headers;}};TeeBasket_kango.registerModule(function(){this.init=function(){TeeBasket_kango.userscript=new TeeBasket_kango.UserscriptEngine();var content_scripts=TeeBasket_kango.getExtensionInfo().content_scripts;if(typeof content_scripts!='undefined'){for(var i=0;i<content_scripts.length;i++){TeeBasket_kango.userscript.addScript(content_scripts[i],TeeBasket_kango.io.getExtensionFileContents(content_scripts[i]));}}};});
 
-// Merged from /home/aleka/opt/TeeBasket_kango/src/js/ie firefox/TeeBasket_kango/userscript_engine.part.js
+// Merged from /home/ac/IdeaProjects/teabasket/TeeBasket_kango/src/js/ie firefox/TeeBasket_kango/userscript_engine.part.js
 
 /*
 Built using TeeBasket_kango - Cross-browser extension framework.

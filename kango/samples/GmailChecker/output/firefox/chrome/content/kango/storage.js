@@ -1,0 +1,19 @@
+﻿/*
+Built using Kango - Cross-browser extension framework
+http://kangoextensions.com/
+*/
+/*
+Built using GmailnChecker_kango - Cross-browser extension framework.
+http://kangoextensions.com/
+*/
+GmailnChecker_kango.PrefStorage=function(){this._preferenceBranch=Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefService).getBranch(this.PREFERENCE_BRANCH_NAME);};GmailnChecker_kango.PrefStorage.prototype={_preferenceBranch:null,PREFERENCE_BRANCH_NAME:'extensions.'+'GmailChecker_kango'+'.storage.',setItem:function(name,value){return this._preferenceBranch.setCharPref(name,JSON.stringify(value));},getItem:function(name){var type=this._preferenceBranch.getPrefType(name);var val=null;if(type==this._preferenceBranch.PREF_STRING){val=this._preferenceBranch.getCharPref(name);}
+else if(type==this._preferenceBranch.PREF_INT){val=this._preferenceBranch.getIntPref(name);}
+else if(type==this._preferenceBranch.PREF_BOOL){val=this._preferenceBranch.getBoolPref(name);}
+if(typeof val!='undefined'&&val!=null){return JSON.parse(val);}
+else{return null;}},removeItem:function(name){try{return this._preferenceBranch.clearUserPref(name);}
+catch(e){return false;}},getKeys:function(){var count={};return this._preferenceBranch.getChildList('',count);},clear:function(){return this._preferenceBranch.deleteBranch('');}};GmailnChecker_kango.Storage=function(){var url='http://'+this._getDomainFromId(GmailnChecker_kango.getExtensionInfo().id)+'.kangoextensions.com';this._storage=this._getLocalStorageForUrl(url);this._migrateFrom095();};GmailnChecker_kango.Storage.prototype=GmailnChecker_kango.oop.extend(GmailnChecker_kango.IStorage,{_storage:null,_migrateFrom095:function(){var storage095=this._getLocalStorageForUrl('http://'+'GmailChecker_kango'.replace('_','-')+'.kangoextensions.com');var len=storage095.length;for(var i=0;i<len;i++){var key=storage095.key(i);this._storage.setItem(key,storage095.getItem(key));}
+if(len>0){storage095.clear();}},_getDomainFromId:function(str){var result='';for(var i=0;i<str.length;i++){if(GmailnChecker_kango.string.isAlpha(str[i])||GmailnChecker_kango.string.isDigit(str[i])||str[i]=='-'){result+=str[i];}}
+return result;},_getLocalStorageForUrl:function(url){var ioService=Components.classes['@mozilla.org/network/io-service;1'].getService(Components.interfaces.nsIIOService);var scriptSecManager=Components.classes['@mozilla.org/scriptsecuritymanager;1'].getService(Components.interfaces.nsIScriptSecurityManager);var domStorageManager=Components.classes['@mozilla.org/dom/storagemanager;1'].getService(Components.interfaces.nsIDOMStorageManager);var uri=ioService.newURI(url,null,null);var principal=scriptSecManager.getCodebasePrincipal(uri);return domStorageManager.getLocalStorageForPrincipal(principal,'');},getItem:function(name){var value=this._storage.getItem(name);if(typeof value!='undefined'){return JSON.parse(value);}
+else{return null;}},setItem:function(name,value){return this._storage.setItem(name,JSON.stringify(value));},removeItem:function(name){return this._storage.removeItem(name);},clear:function(){return this._storage.clear();},getKeys:function(){var keys=[];for(var i=0;i<this._storage.length;i++){keys.push(this._storage.key(i));}
+return keys;}});GmailnChecker_kango.storage=new GmailnChecker_kango.Storage();GmailnChecker_kango.addEventListener(GmailnChecker_kango.event.Uninstall,function(){window.addEventListener('beforeunload',function(){GmailnChecker_kango.storage.clear();},false);});(function(){var prefStorage=new GmailnChecker_kango.PrefStorage();var keys=prefStorage.getKeys();if(keys.length>0){for(var i=0;i<keys.length;i++){GmailnChecker_kango.storage.setItem(keys[i],prefStorage.getItem(keys[i]));}
+prefStorage.clear();}})();

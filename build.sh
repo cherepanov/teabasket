@@ -1,3 +1,3 @@
 #!/bin/bash
-KANGODIR="../.."
+KANGODIR="./kango"
 python $KANGODIR/kango.py build ./

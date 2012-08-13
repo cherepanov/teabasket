@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+	<head>
+		<style type="text/css">
+			html, body, div, iframe {
+				margin: 0;
+				padding: 0;
+				border: 0;
+			}
+	    </style>
+		<script type="text/javascript" src="../kango-ui/popup_init.js"></script>
+		<script type="application/javascript">
+			var RemotePopupHost = {
+
+				_container: null,
+				_frame: null,
+
+				_initMessaging: function(frame) {
+					var listeners = [];
+
+					window.addEventListener('message', function(event) {
+						var message = JSON.parse(event.data);
+						var e = {
+							name: message.name,
+							data: message.data,
+							origin: event.origin,
+							source: {
+								dispatchMessage: function(name, data) {
+									event.source.postMessage(JSON.stringify({name: name, data: data}), '*');
+								}
+							},
+							target: kango
+						};
+						for(var i = 0; i < listeners.length; i++) {
+							listeners[i](e);
+						}
+					}, false);
+
+					this.dispatchMessage = function(name, data) {
+						frame.postMessage(JSON.stringify({name: name, data: data}), '*');
+					};
+
+					this.addEventListener = function(type, listener) {
+						if(type == 'message') {
+							for(var i = 0; i < listeners.length; i++) {
+								if(listeners[i] == listener) {
+									return;
+								}
+							}
+							listeners.push(listener);
+						}
+					};
+
+					(new kango.InvokeAsyncModule()).init(this);
+					(new kango.MessageTargetModule()).init(this);
+
+					var self = this;
+					this.addMessageListener('ClosePopup', function() {
+						kangoPopup.close();
+					});
+				},
+	
+				_createFrame: function(url) {
+					var frame = document.createElement('iframe');
+					frame.width = '100%';
+					frame.height = '100%';
+					frame.src = url;
+					this._frame = frame;
+					this._initMessaging(frame);
+					this._container.appendChild(frame);
+				},
+
+				init: function() {
+					this._container = document.getElementById('container');
+					var details = kango.ui.browserButton.getPopupDetails();
+					if(typeof details.width == 'number') {
+						this._container.style.width = details.width + 'px';
+					}
+					if(typeof details.height == 'number') {
+						this._container.style.height = details.height + 'px';
+					}
+					var self = this;
+					window.setTimeout(function(){self._createFrame(details.url)}, 50);
+				},	
+				
+				getContext: function() {
+					return kango.getContext();
+				},
+				
+				lang: {
+
+					invoke: function(context, methodName, params) {
+						var arr = methodName.split('.');
+						var parent = context;
+						var funcName = arr.pop();
+						for(var i = 0; i < arr.length; i++) {
+							parent = parent[arr[i]];
+						}
+						return parent[funcName].apply(parent, params);
+					}
+				}
+			};
+
+			kangoPopup.onReady(function() {
+				RemotePopupHost.init()
+			});
+		</script>
+	</head>
+	<body>
+		<div id="container" style="width:100px;height:100px;"></div>
+	</body>
+</html>

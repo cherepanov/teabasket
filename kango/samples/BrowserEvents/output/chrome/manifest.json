@@ -1,0 +1,27 @@
+{
+  "name": "BrowserEvents", 
+  "icons": {
+    "128": "icons/icon128.png", 
+    "48": "icons/icon48.png", 
+    "16": "icons/button.png"
+  }, 
+  "description": "Browser API demo", 
+  "background": {
+    "page": "background.html"
+  }, 
+  "homepage_url": "http://kangoextensions.com/", 
+  "version": "1.0.0", 
+  "manifest_version": 2, 
+  "browser_action": {
+    "default_icon": "icons/button.png", 
+    "default_title": "BrowserEvents"
+  }, 
+  "permissions": [
+    "tabs", 
+    "http://*/*", 
+    "https://*/*", 
+    "contextMenus", 
+    "webNavigation", 
+    "notifications"
+  ]
+}

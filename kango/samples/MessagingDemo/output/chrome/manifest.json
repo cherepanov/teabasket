@@ -1,0 +1,44 @@
+{
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*", 
+        "https://*/*"
+      ], 
+      "all_frames": true, 
+      "run_at": "document_start", 
+      "js": [
+        "includes/content_kango.js", 
+        "includes/invoke_async_module.js", 
+        "includes/message_target_module.js", 
+        "includes/userscript_client.js", 
+        "includes/content_init.js"
+      ]
+    }
+  ], 
+  "name": "MessagingDemo", 
+  "icons": {
+    "128": "icons/icon128.png", 
+    "48": "icons/icon48.png", 
+    "16": "icons/button.png"
+  }, 
+  "description": "Messaging API demo", 
+  "background": {
+    "page": "background.html"
+  }, 
+  "homepage_url": "http://kangoextensions.com/", 
+  "version": "1.1.0", 
+  "manifest_version": 2, 
+  "browser_action": {
+    "default_icon": "icons/button.png", 
+    "default_title": "MessagingDemo"
+  }, 
+  "permissions": [
+    "tabs", 
+    "http://*/*", 
+    "https://*/*", 
+    "contextMenus", 
+    "webNavigation", 
+    "notifications"
+  ]
+}
