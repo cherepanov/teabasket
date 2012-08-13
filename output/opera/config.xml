@@ -1,0 +1,10 @@
+<?xml version="1.0" ?><widget id="http://www.yunnansourcing.com/store/order.php" version="0.3.2" xmlns="http://www.w3.org/ns/widgets">
+	<name>TeeBasket</name>
+	<description>Useful tool for bying tea</description>
+	<author href="http://www.yunnansourcing.com/store/order.php">Alexey Cherepanov</author>
+	<update-description href=""/>
+	<icon src="icons/icon100.png"/>
+	<content src="background.html"/>
+	<access origin="*"/>
+	<feature name="opera:share-cookies"/>
+</widget>

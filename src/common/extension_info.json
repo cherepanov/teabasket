@@ -1,0 +1,10 @@
+{
+    "name": "TeeBasket",
+    "version": "0.3.2",
+    "description": "Useful tool for bying tea",
+    "creator": "Alexey Cherepanov",
+    "homepage_url": "http://www.yunnansourcing.com/store/order.php",
+    "content_scripts": [
+        "inject.user.js"
+    ]
+}
