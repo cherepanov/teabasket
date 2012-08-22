@@ -1,3 +1,7 @@
+﻿/*
+Built using Kango - Cross-browser extension framework
+http://kangoextensions.com/
+*/
 // ==UserScript==
 // @name TeaBasket
 // @description tea bying helper script
@@ -42,7 +46,7 @@
 			nameLbl = $('<label for="tbShowBtn">My name is</label>').appendTo(options),
 			usernameOpt = $('<input id="tbUsername" type="text">').appendTo(options),
 			showBtn = $('<div id="tbShowBtn">X</div>').appendTo(options),
-			content = $('<div id="tbContent"></div>').appendTo(container);
+			content = $('<pre id="tbContent"></pre>').appendTo(container);
 
 		showBtn.css({
 			float: 'right',
@@ -97,42 +101,72 @@
 			return str.replace(/\$/g, '').replace(/\./g, ',');
 		}
 		
+		function formatPackagingWeight(str) {
+			return str.trim().replace(/(\d+) grams/, '$1').replace(/(\d+) kilogram/, '$1000')
+		}
+
+		function formatBruttoWeight(str) {
+			return parseFloat(str.trim().replace(/([\d\.]+) kg/, '$1')) * 1000;
+		}
+
 		function parseBasket() {
-			var slotLenght = -1;
+			var slotLenght = -1,
+			    productsCount = 0,
+			    sumPrice = summary.find('.cart_total_product .price').text(),
+			    sumShip = summary.find('.cart_total_delivery .price').text(),
+			    sumTotal = summary.find('.cart_total_price .price').text(),
+			    totalQuant = $('#shopping_cart .ajax_cart_quantity').text(),
+			    items = [],
+			    progress = productsCount;
+
+
+			var dfd = new jQuery.Deferred();
 
 			content.text('');
 
 			writeln(USERNAME);
 			writeln();
+			writeln(joinItems(["Link", "Description", "Packaging", "Brutto", "Quantity", "Package price", "Packages count", "Position price", "Shipping"]));
 
 			items.map(function() {
-				var url = $(this).find('.cart_product a').attr('href'),
-					descr = $(this).find('.cart_description h5 a').text(),
-					quant = $(this).find('.cart_description > a').text().split(':')[1] || '',
-					unitPrice = $(this).find('.cart_unit > span').text(),
-					unitQuant = $(this).find('.cart_quantity > p').text(),
-					totalPrice = $(this).find('.cart_total > span').text(),
-					arrSlot = [url, descr, quant.trim(), formatPrice(unitPrice), unitQuant, formatPrice(totalPrice)];
+				var self = $(this),
+					url = self.find('.cart_product a').attr('href'),
+					descr = self.find('.cart_description h5 a').text(),
+					packaging = self.find('.cart_description > a').text().split(':')[1] || '',
+					unitPrice = self.find('.cart_unit > span').text(),
+					unitQuant = self.find('.cart_quantity > p').text(),
+					totalPrice = self.find('.cart_total > span').text();
 
-				slotLength = arrSlot.length;
-				writeln(joinItems(arrSlot));
+				if( packaging === '' && /.* (\d+) grams/.test(descr) ) {
+					packaging = descr.replace(/.* (\d+) grams/, '$1');
+				}
+
+				productsCount++;
+
+				$.when($.ajax(url.replace('http://', 'https://'))).then(function(response) {
+					var page = $(response),
+					    bruttoWeight = page.find("#buy_block :contains(Weight)").text().split(':')[1].trim(),
+					    arrSlot = [url, descr, formatPackagingWeight(packaging), formatBruttoWeight(bruttoWeight), formatPrice(unitPrice), unitQuant, formatPrice(totalPrice), formatPrice(sumShip)];
+
+					arrProductPageUrl.push(url);
+					slotLenght = arrSlot.length;
+					writeln(joinItems(arrSlot));
+					if(++progress === productsCount) {
+						dfd.resolve();
+					}
+				});
 			});
 
-			var	sumPrice = summary.find('.cart_total_product .price').text(),
-				sumShip = summary.find('.cart_total_delivery .price').text(),
-				sumTotal = summary.find('.cart_total_price .price').text(),
-				totalQuant = $('#shopping_cart .ajax_cart_quantity').text(),
-				ident = createIdent(slotLength),
-				arrLn1 = [formatPrice(sumTotal), totalQuant, formatPrice(sumPrice)],
-				totalLn1 =  ident + joinItems(arrLn1),
-				arrLn2 = [],
-				totalLn2 = ident + joinItems(arrLn2),
-				arrLn3 = [],
-				totalLn3 = ident + joinItems(arrLn3);
-			
-			writeln(totalLn1);
-			writeln(totalLn2);
-			writeln(totalLn3);
+			dfd.done(function() {
+				var ident = createIdent(slotLenght),
+				    arrLn1 = ["total: ", formatPrice(sumTotal), totalQuant, formatPrice(sumPrice), formatPrice(sumShip)],
+				    totalLn1 =  ident + joinItems(arrLn1),
+				    arrLn2 = ["products count: ", productsCount],
+				    totalLn2 = ident + joinItems(arrLn2);
+
+				writeln(totalLn1);
+				writeln(totalLn2);
+			});
 		}
 
 		parseBasket();
