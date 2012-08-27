@@ -3,7 +3,7 @@ Built using Kango - Cross-browser extension framework
 http://kangoextensions.com/
 */
 /*
-Built using TeeBasket_kango - Cross-browser extension framework.
+Built using TeaBasket_kango - Cross-browser extension framework.
 http://kangoextensions.com/
 */
-TeeBasket_kango.IO=function(){};TeeBasket_kango.IO.prototype=TeeBasket_kango.oop.extend(TeeBasket_kango.IOBase,{getExtensionFileUrl:function(filename){return'chrome://TeeBasket_kango/content/'+filename;}});TeeBasket_kango.io=new TeeBasket_kango.IO();
+TeaBasket_kango.IO=function(){};TeaBasket_kango.IO.prototype=TeaBasket_kango.oop.extend(TeaBasket_kango.IOBase,{getExtensionFileUrl:function(filename){return'chrome://TeaBasket_kango/content/'+filename;}});TeaBasket_kango.io=new TeaBasket_kango.IO();

@@ -1,2 +1,2 @@
-content TeeBasket_kango chrome/content/
-overlay chrome://browser/content/browser.xul chrome://TeeBasket_kango/content/content.xul
+content TeaBasket_kango chrome/content/
+overlay chrome://browser/content/browser.xul chrome://TeaBasket_kango/content/content.xul

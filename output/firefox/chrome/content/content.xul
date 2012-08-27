@@ -29,8 +29,8 @@
 	
 
     <box style="display:none;">
-		<html:canvas id="TeeBasket_kango-ui-canvas" width="19" height="19"/>
-        <iframe id="TeeBasket_kangoBackgroundScriptHost" type="content" hidden="false" height="0"/>
+		<html:canvas id="TeaBasket_kango-ui-canvas" width="19" height="19"/>
+        <iframe id="TeaBasket_kangoBackgroundScriptHost" type="content" hidden="false" height="0"/>
 	</box>
 
     <!-- Modules -->

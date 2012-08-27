@@ -11,7 +11,7 @@ if(this._currentLocale!=this._defaultLocale){this._messages[this._defaultLocale]
 return null;},init:function(localeName){this.setCurrentLocale(localeName);},setCurrentLocale:function(localeName){this._loadLocales(localeName);},getCurrentLocale:function(){return this._currentLocale;},getMessages:function(){if(this._messages!=null){return(typeof this._messages[this._currentLocale]!='undefined')?this._messages[this._currentLocale]:this._messages[this._defaultLocale];}
 return null;},getMessage:function(message){var messages=this.getMessages();return(messages!=null&&typeof messages[message]!='undefined')?messages[message]:message;}};kango.i18n=new kango.Internationalization();
 
-// Merged from /home/ac/IdeaProjects/teabasket/kango/src/js/chrome opera safari firefox/kango/i18n.part.js
+// Merged from /home/ac/Downloads/teabasket/kango/src/js/chrome opera safari firefox/kango/i18n.part.js
 
 /*
 Built using Kango - Cross-browser extension framework.

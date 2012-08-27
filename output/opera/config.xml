@@ -1,5 +1,5 @@
-<?xml version="1.0" ?><widget id="http://www.yunnansourcing.com/store/order.php" version="0.3.2" xmlns="http://www.w3.org/ns/widgets">
-	<name>TeeBasket</name>
+<?xml version="1.0" ?><widget id="http://www.yunnansourcing.com/store/order.php" version="0.3.5" xmlns="http://www.w3.org/ns/widgets">
+	<name>TeaBasket</name>
 	<description>Useful tool for bying tea</description>
 	<author href="http://www.yunnansourcing.com/store/order.php">Alexey Cherepanov</author>
 	<update-description href=""/>
